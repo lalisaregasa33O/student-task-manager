@@ -50,10 +50,9 @@ app.get("/api/tasks", async (req, res) => {
 // CREATE A TASK
 // =========================
 
-// CREATE A TASK
 app.post("/api/tasks", async (req, res) => {
     try {
-        const { title, priority } = req.body;
+        const { title } = req.body;
 
         // Validate title
         const validationError = validateTaskTitle(title);
@@ -64,20 +63,12 @@ app.post("/api/tasks", async (req, res) => {
             });
         }
 
-        // Validate priority
-        const allowedPriorities = ["low", "medium", "high"];
-
-        if (!allowedPriorities.includes(priority)) {
-            return res.status(400).json({
-                message: "Priority must be low, medium, or high."
-            });
-        }
-
+        // Remove unnecessary spaces
         const cleanTitle = title.trim();
 
+        // Create task
         const task = await Task.create({
-            title: cleanTitle,
-            priority: priority
+            title: cleanTitle
         });
 
         res.status(201).json(task);
@@ -191,8 +182,11 @@ async function startServer() {
 
         console.log("MongoDB connected");
 
-        app.listen(5000, () => {
-            console.log("Server is running on port 5000");
+       const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
         });
 
     } catch (error) {
