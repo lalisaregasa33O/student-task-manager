@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
     res.send("Student Task Manager Backend");
 });
 
-
 // =========================
 // GET ALL TASKS
 // =========================
@@ -44,7 +43,6 @@ app.get("/api/tasks", async (req, res) => {
         });
     }
 });
-
 
 // =========================
 // CREATE A TASK
@@ -77,11 +75,10 @@ app.post("/api/tasks", async (req, res) => {
         console.log("POST error:", error);
 
         res.status(500).json({
-            message: "Failed to create task."
+            message: error.message
         });
     }
 });
-
 
 // =========================
 // UPDATE A TASK
@@ -140,7 +137,6 @@ app.put("/api/tasks/:id", async (req, res) => {
     }
 });
 
-
 // =========================
 // DELETE A TASK
 // =========================
@@ -171,7 +167,6 @@ app.delete("/api/tasks/:id", async (req, res) => {
     }
 });
 
-
 // =========================
 // START SERVER
 // =========================
@@ -182,11 +177,10 @@ async function startServer() {
 
         console.log("MongoDB connected");
 
-       const PORT = process.env.PORT || 5000;
+        const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
         });
 
     } catch (error) {
